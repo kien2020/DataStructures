@@ -1,11 +1,13 @@
 class DSU_stack
 {
-    private:
+private:
     vector<int> par, sz;
-    vector<array<int, 4>> operations;
-    public:
-    inline DSU_stack(int new_size)
+    vector<pair<int, int>> operations;
+
+public:
+    inline void Init(int new_size)
     {
+        operations.clear();
         par.clear();
         par.resize(new_size);
         sz.clear();
@@ -29,7 +31,7 @@ class DSU_stack
             {
                 swap(ina, inb);
             }
-            operations.push_back({ina, inb, sz[ina], sz[inb]});
+            operations.push_back({ina, inb});
             sz[ina] += sz[inb];
             par[inb] = ina;
             return 1;
@@ -38,9 +40,8 @@ class DSU_stack
     }
     inline void Redo()
     {
-        sz[operations.back()[0]] = operations.back()[2];
-        sz[operations.back()[1]] = operations.back()[3];
-        par[operations.back()[0]] = operations.back()[0];
-        par[operations.back()[1]] = operations.back()[1];
+        par[operations.back().second] = operations.back().second;
+        sz[operations.back().first] -= sz[operations.back().second];
+        operations.pop_back();
     }
 };
