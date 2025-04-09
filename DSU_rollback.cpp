@@ -70,6 +70,7 @@ private:
     }
     inline void Traverse(int ind, int l, int r)
     {
+        int real_edges = 0;
         if (l == r)
         {
             return;
@@ -77,11 +78,11 @@ private:
         int m = (l + r) >> 1;
         for (auto & i : tree[ind])
         {
-            dsu_stack.Unity(i.first, i.second);
+            real_edges += dsu_stack.Unity(i.first, i.second);
         }
         Traverse(ind << 1, l, m);
         Traverse(ind << 1 | 1, m + 1, r);
-        for (int i = 0; i < tree[ind].size(); ++i)
+        while (real_edges--)
         {
             dsu_stack.Redo();
         }
