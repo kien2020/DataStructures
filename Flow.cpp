@@ -74,4 +74,4 @@ struct FLOW
         }
         return cost;
     }
-} flow;
+};
