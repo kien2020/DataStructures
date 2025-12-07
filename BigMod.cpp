@@ -1,4 +1,4 @@
-const long long mod = 1e18 - 11;
+const long long mod = 1000000000000037;
 
 struct BIG_MOD
 {
