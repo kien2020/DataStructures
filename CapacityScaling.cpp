@@ -22,7 +22,6 @@ struct FLOW
         edge.clear();
         graph.clear();
         par.clear();
-        edge.resize(n);
         graph.resize(n);
         par.resize(n);
     }
@@ -58,16 +57,18 @@ struct FLOW
         }
         return par[t] != -1;
     }
-    inline long long Process(int s, int t, long long val = 1e18)
+    inline long long Process(int s, int t)
     {
-        int ind = par[t];
-        if (s == t)
+        long long val = 1e18;
+        for (int i = t; i != s; i = edge[par[i]].a)
         {
-            return val;
+            val = min(val, edge[par[i]].cap - edge[par[i]].val);
         }
-        val = min(val, Process(s, edge[ind].a, val));
-        edge[ind].val += val;
-        edge[ind ^ 1].val -= val;
+        for (int i = t; i != s; i = edge[par[i]].a)
+        {
+            edge[par[i]].val += val;
+            edge[par[i] ^ 1].val -= val;
+        }
         return val;
     }
     inline long long MaxFlow(int s, int t)
